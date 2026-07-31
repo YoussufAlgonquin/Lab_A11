@@ -63,20 +63,23 @@ Four automated GitHub Actions workflows are implemented:
 
 ### GitHub secrets to configure
 
+Do not commit the actual values below to the repo — look them up locally and paste them straight
+into the GitHub Secrets UI (`Settings > Secrets and variables > Actions`).
+
 **Repository level:**
 
-| Secret | Value |
+| Secret | How to get the value |
 |---|---|
-| `AZURE_TENANT_ID` | `ec1bd924-0a6a-4aa9-aa89-c980316c0449` |
-| `AZURE_SUBSCRIPTION_ID` | `98fe3316-7082-4299-bd73-cc87fb355015` |
-| `AZURE_CLIENT_ID` | `79a2c9e4-10a4-4ceb-b40a-cd6f3c481c16` (reader identity `hich0005-githubactions-r`) |
-| `ARM_ACCESS_KEY` | primary access key of storage account `hich0005githubactions` (get with `az storage account keys list --account-name hich0005githubactions --resource-group hich0005-githubactions-rg --query "[0].value" -o tsv`) |
+| `AZURE_TENANT_ID` | `az account show --query tenantId -o tsv` |
+| `AZURE_SUBSCRIPTION_ID` | `az account show --query id -o tsv` |
+| `AZURE_CLIENT_ID` | `az identity show --name hich0005-githubactions-r --resource-group hich0005-a12-rg --query clientId -o tsv` (reader identity) |
+| `ARM_ACCESS_KEY` | `az storage account keys list --account-name hich0005githubactions --resource-group hich0005-githubactions-rg --query "[0].value" -o tsv` |
 
 **`production` environment level:**
 
-| Secret | Value |
+| Secret | How to get the value |
 |---|---|
-| `AZURE_CLIENT_ID` | `449afb06-fd87-4278-8d90-da73a0667048` (contributor identity `hich0005-githubactions-rw`) |
+| `AZURE_CLIENT_ID` | `az identity show --name hich0005-githubactions-rw --resource-group hich0005-a12-rg --query clientId -o tsv` (contributor identity) |
 
 ## Screenshots
 
