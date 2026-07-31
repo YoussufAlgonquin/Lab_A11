@@ -3,7 +3,7 @@
 ## Team Members
 
 - Youssuf ([@YoussufAlgonquin](https://github.com/YoussufAlgonquin))
-- _TODO: teammate full name and [@github-username](https://github.com/github-username)_
+- Muhannad Jaber ([@muhannadj27](https://github.com/muhannadj27))
 
 ## Background
 
@@ -32,7 +32,6 @@ Four automated GitHub Actions workflows are implemented:
 │   ├── tf-app
 │   │   ├── .tflint.hcl
 │   │   ├── main.tf
-│   │   ├── network.tf
 │   │   ├── outputs.tf
 │   │   ├── terraform.tf
 │   │   └── variables.tf
@@ -95,7 +94,7 @@ _TODO: embed the PR checks screenshot and the expanded Terraform Plan screenshot
   (`infra/tf-backend`), the Azure managed identities / federated credentials used for OIDC
   authentication, and docs steps 1-5 (`docs/1-github-settings.md` through
   `docs/5-use-oidc.md`, including `docs/3b-managed-identities.md`).
-- **_TODO: teammate full name_ ([@github-username](https://github.com/github-username))** -
+- **Muhannad Jaber ([@muhannadj27](https://github.com/muhannadj27))** -
   application Terraform configuration (`infra/tf-app`), all three GitHub Actions workflows
   (`.github/workflows`), and docs steps 6-7 (`docs/6_0-github-actions.md` through
   `docs/7-add-infra-elements.md`).
