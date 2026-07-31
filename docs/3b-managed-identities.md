@@ -34,7 +34,7 @@ az identity federated-credential create \
   --identity-name hich0005-githubactions-rw \
   --resource-group $resourceGroupName \
   --issuer https://token.actions.githubusercontent.com \
-  --subject "repo:YoussufAlgonquin/cst8918-w25-lab12:environment:production" \
+  --subject "repo:YoussufAlgonquin@255024064/Lab_A11@1317798799:environment:production" \
   --audiences "api://AzureADTokenExchange"
 
 # Read-only identity (reader) - used by PR / branch push workflows
@@ -51,7 +51,7 @@ az identity federated-credential create \
   --identity-name hich0005-githubactions-r \
   --resource-group $resourceGroupName \
   --issuer https://token.actions.githubusercontent.com \
-  --subject "repo:YoussufAlgonquin/cst8918-w25-lab12:pull_request" \
+  --subject "repo:YoussufAlgonquin@255024064/Lab_A11@1317798799:pull_request" \
   --audiences "api://AzureADTokenExchange"
 
 az identity federated-credential create \
@@ -59,7 +59,7 @@ az identity federated-credential create \
   --identity-name hich0005-githubactions-r \
   --resource-group $resourceGroupName \
   --issuer https://token.actions.githubusercontent.com \
-  --subject "repo:YoussufAlgonquin/cst8918-w25-lab12:branch:main" \
+  --subject "repo:YoussufAlgonquin@255024064/Lab_A11@1317798799:ref:refs/heads/main" \
   --audiences "api://AzureADTokenExchange"
 ```
 
@@ -67,6 +67,20 @@ az identity federated-credential create \
 > Running these commands in Git Bash on Windows requires `MSYS_NO_PATHCONV=1` prefixed to the
 > `az role assignment create` command, otherwise Git Bash rewrites the leading `/subscriptions/...`
 > path into a Windows filesystem path and the request fails with `MissingSubscription`.
+
+> [!NOTE]
+> **Two more corrections discovered while first running the workflows on a live PR:**
+>
+> 1. **Subject format includes immutable owner/repo IDs.** GitHub now defaults new
+>    repositories to `repo:{owner}@{owner_id}/{repo}@{repo_id}:...` subject claims (a hardening
+>    against repo-rename/transfer OIDC hijacking), not the plain `repo:{owner}/{repo}:...` format
+>    the original lab instructions assume. Confirm the exact prefix for your repo with:
+>    `gh api repos/<owner>/<repo>/actions/oidc/customization/sub`. All three federated credentials
+>    above must use that exact prefix.
+> 2. **Branch-push subject is `ref:refs/heads/<branch>`, not `branch:<branch>`.** The lab's
+>    `branch-main.json` example (`repo:...:branch:main`) does not match any subject GitHub Actions
+>    actually issues. The correct claim for a push to `main` is
+>    `repo:...:ref:refs/heads/main`.
 
 ### Resulting resources (already created in Azure for this lab)
 
@@ -79,9 +93,9 @@ Federated credentials attached:
 
 | Identity | Credential name | Subject |
 |---|---|---|
-| `hich0005-githubactions-rw` | `production-deploy` | `repo:YoussufAlgonquin/cst8918-w25-lab12:environment:production` |
-| `hich0005-githubactions-r` | `pull-request` | `repo:YoussufAlgonquin/cst8918-w25-lab12:pull_request` |
-| `hich0005-githubactions-r` | `branch-main` | `repo:YoussufAlgonquin/cst8918-w25-lab12:branch:main` |
+| `hich0005-githubactions-rw` | `production-deploy` | `repo:YoussufAlgonquin@255024064/Lab_A11@1317798799:environment:production` |
+| `hich0005-githubactions-r` | `pull-request` | `repo:YoussufAlgonquin@255024064/Lab_A11@1317798799:pull_request` |
+| `hich0005-githubactions-r` | `branch-main` | `repo:YoussufAlgonquin@255024064/Lab_A11@1317798799:ref:refs/heads/main` |
 
 ### GitHub secrets mapping
 
