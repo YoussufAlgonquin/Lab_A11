@@ -1,7 +1,9 @@
 output "resource_group_name" {
-  value = azurerm_resource_group.app.name
+  description = "The name of the application resource group."
+  value       = azurerm_resource_group.app.name
 }
 
 output "resource_group_id" {
-  value = azurerm_resource_group.app.id
+  description = "The Azure resource ID of the application resource group."
+  value       = azurerm_resource_group.app.id
 }
