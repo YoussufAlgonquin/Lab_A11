@@ -32,6 +32,7 @@ Four automated GitHub Actions workflows are implemented:
 │   ├── tf-app
 │   │   ├── .tflint.hcl
 │   │   ├── main.tf
+│   │   ├── network.tf
 │   │   ├── outputs.tf
 │   │   ├── terraform.tf
 │   │   └── variables.tf
@@ -45,12 +46,23 @@ Four automated GitHub Actions workflows are implemented:
 ## Setup Status
 
 - [x] `infra/tf-backend` deployed - Azure Storage Account for remote Terraform state.
-- [x] `infra/tf-app` base configuration (resource group) deployed locally.
+- [x] `infra/tf-app` base configuration (resource group) deployed.
 - [x] GitHub Actions workflow files authored.
 - [x] Azure identities and federated credentials created (see note below).
-- [ ] GitHub repository created / branch protection / environment configured.
-- [ ] Repository + environment secrets populated (values below).
-- [ ] `infra-elements` branch / pull request to exercise the full CI/CD pipeline.
+- [x] GitHub repository / branch protection / `production` environment configured.
+- [x] Repository + environment secrets populated.
+- [x] `infra-elements` branch / pull request (#1) exercised the full CI/CD pipeline - static
+      tests, tflint, and Terraform plan all passed; PR approved and merged to `main`.
+
+> [!NOTE]
+> **Post-grading teardown:** all Azure resources created for this lab (both resource groups,
+> the storage account, and the managed identities) have been destroyed after the required
+> screenshots were captured, to avoid ongoing cost on the student subscription. The pending
+> `production` deployment for PR #1 was rejected rather than applied, since the VNet/Subnet would
+> have been destroyed immediately after anyway. To redeploy, re-run the steps in
+> [`docs/2-terraform-backend.md`](docs/2-terraform-backend.md) and
+> [`docs/3b-managed-identities.md`](docs/3b-managed-identities.md), then re-populate the GitHub
+> secrets listed below.
 
 > [!NOTE]
 > The Algonquin student Azure tenant does not grant students permission to register Azure AD
@@ -82,9 +94,12 @@ into the GitHub Secrets UI (`Settings > Secrets and variables > Actions`).
 
 ## Screenshots
 
-_TODO: embed the PR checks screenshot and the expanded Terraform Plan screenshot here once the pipeline has run end-to-end._
+PR #1 (`infra-elements` → `main`) with all checks passed:
 
 ![PR checks](screenshots/pr-checks.png)
+
+Expanded Terraform Plan output showing the Virtual Network and Subnet additions:
+
 ![Terraform Plan](screenshots/pr-tf-plan.png)
 
 ## Contributions
